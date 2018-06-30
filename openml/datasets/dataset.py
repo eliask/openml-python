@@ -54,13 +54,12 @@ class OpenMLDataset(object):
         self.url = url
         self.default_target_attribute = default_target_attribute
         self.row_id_attribute = row_id_attribute
-        self.ignore_attributes = None
         if isinstance(ignore_attribute, six.string_types):
             self.ignore_attributes = [ignore_attribute]
         elif isinstance(ignore_attribute, list):
             self.ignore_attributes = ignore_attribute
         elif ignore_attribute is None:
-            pass
+            self.ignore_attributes = []
         else:
             raise ValueError('wrong data type for ignore_attribute. Should be list. ')
         self.version_label = version_label
@@ -251,10 +250,7 @@ class OpenMLDataset(object):
             if not self.ignore_attributes:
                 pass
             else:
-                if isinstance(self.ignore_attributes, six.string_types):
-                    to_exclude.append(self.ignore_attributes)
-                else:
-                    to_exclude.extend(self.ignore_attributes)
+                to_exclude.extend(self.ignore_attributes)
 
         if len(to_exclude) > 0:
             logger.info("Going to remove the following attributes:"
