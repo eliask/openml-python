@@ -77,6 +77,8 @@ class OpenMLDataset(object):
         if features is not None:
             self.features = {}
             for idx, xmlfeature in enumerate(features['oml:feature']):
+                if xmlfeature['oml:name'] in self.ignore_attributes:
+                    continue
                 feature = OpenMLDataFeature(int(xmlfeature['oml:index']),
                                             xmlfeature['oml:name'],
                                             xmlfeature['oml:data_type'],
